@@ -17,6 +17,19 @@
     
     
     <entry>
+      <title>post</title>
+      <link href="/2024/07/24/SequenceContainer/"/>
+      <url>/2024/07/24/SequenceContainer/</url>
+      
+        <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><code>提示：这里可以添加本文要记录的大概内容：</code></p><p>例如：随着人工智能的不断发展，机器学习这门技术也越来越重要，很多人都开启了学习机器学习，本文就介绍了机器学习的基础内容。</p><p><code>提示：以下是本篇文章正文内容，下面案例可供参考</code></p><h1 id="一、顺序容器"><a href="#一、顺序容器" class="headerlink" title="一、顺序容器"></a>一、顺序容器</h1><p>vector、deque、list、forward_list、array、string<br>顺序容器为用户提供了控制访问和存储顺序的能力。</p><p>容器一般会考虑两个方面的性能：1、任意位置添加\删除元素。2、随机访问元素（非顺序访问）</p><p>正所谓天下没有白吃的午餐。没有一种方法可以满足所有性能需求。在顺序容器中：</p><ul><li>vector和string随机访问的效率很高，但是在除尾部以外的位置添加\ 删除元素会挪动修改位置之后的所有位置，因此效率很低。</li><li>list和forward_list采用链表实现，可以向任意位置快速添加删除元素，但是只能按顺序访问元素。要访问一个元素只能遍历容器。forward_list没有是一种简单的单项链表没有size（）</li><li>deque类似于vector支持快速随机访问。它是一种双端队列，与vector不同的是，在两端添加\ 删除元素效率接近于list，在中间添加删除元素代价同样很高。</li><li>array是一种固定长度的数组，与内置数组类似。但是更安全，更易使用。不支持添加\删除元素。</li></ul><h1 id="二、容器操作"><a href="#二、容器操作" class="headerlink" title="二、容器操作"></a>二、容器操作</h1><p>容器类型的操作分为：所有容器都提供的和仅针对顺序容器、关联容器或无序容器</p><h2 id="顺序容器操作"><a href="#顺序容器操作" class="headerlink" title="顺序容器操作"></a>顺序容器操作</h2><ul><li>使用assign<br>  赋值运算符需要左边和右边的对象类型相同。顺序容器中assign成员函数允许我们从一个不同但相容的类型赋值，或者从容器的一个子序列赋值。<br>  版本一：sep.assign(p.cbegin(), p.cend() );<br>  版本二：sep.assign(10, “Hiya”);</li></ul><h3 id="添加元素"><a href="#添加元素" class="headerlink" title="添加元素"></a>添加元素</h3><p>不同的容器采用不同的策略来分配元素空间，性能因此不同。</p><ul><li><p>添加元素<br> push_back（array、forward_list不支持）<br> push_front（array、vecotr、string不支持）</p></li><li><p>插入元素<br> insert（forward_list提供特殊版本）</p><p> 第一个版本：参数：第一个参数接受一个迭代器指向容器的某个位置，包括尾元素的下一个位置。第二个参数为插入值。所以插入操作为在迭代器指向的位置前插入元素。<code>sep.insert(sep.end(), &quot;hello&quot;);</code></p><p> 第二个版本：除迭代器参数外，还可以接受添加的数目和添加值作为参数，或者一个列表、一个迭代器范围作为列表添加。<code>sep.insert(sep.end(), 10, &quot;hello&quot;);</code> <code>sep.insert(sep.end(), &#123;&quot;hello&quot;, &quot;hi&quot;&#125;);</code> <code>sep.insert(sep.end(), v.end() - 2, v.end() );</code></p><p> insert()返回值：有添加个数或范围的则返回指向第一个添加值的迭代器</p></li></ul><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">list&lt;string&gt;lst;</span><br><span class="line"><span class="keyword">auto</span> iter = lst.<span class="built_in">begin</span>();</span><br><span class="line"><span class="keyword">while</span>(cin &gt;&gt; word)</span><br><span class="line">iter = lst.<span class="built_in">insert</span>(iter, word);</span><br><span class="line"><span class="comment">//等价于push_front</span></span><br></pre></td></tr></table></figure><p>注：向vector、string、deque插入元素会使所有指向容器的迭代器、引用和指针失效。将元素插入到vector、deque和string尾部以外（deque加上首部）的位置很消费性能。</p><ul><li>emplace操作<br> emplace_front、emplace、emplace_back这三个操作直接构造元素而不是采取拷贝的方式</li></ul><h3 id="访问元素"><a href="#访问元素" class="headerlink" title="访问元素"></a>访问元素</h3><p>1、对迭代器使用解引用。2、front和last成员函数。3、string、vector、array、deque使用at成员函数和下标。</p><p>注意：应先使用empty确保容器不为空，然后使用下标应确保不越界，尽量使用at。</p><h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><p>pop_front、pop_back分别删除首尾元素。vector和string同样不支持pop_front</p><p>erase从指定位置删除一个或多个元素。使用迭代器指定一个位置或范围。返回删除元素之后的位置的迭代器</p><h3 id="forward-list操作"><a href="#forward-list操作" class="headerlink" title="forward_list操作"></a><em>forward_list操作</em></h3><h3 id="改变容器大小（array不支持）"><a href="#改变容器大小（array不支持）" class="headerlink" title="改变容器大小（array不支持）"></a>改变容器大小（array不支持）</h3><p>resize</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Hello World</title>
       <link href="/2024/07/20/hello-world/"/>
       <url>/2024/07/20/hello-world/</url>
