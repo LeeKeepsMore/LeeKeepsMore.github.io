@@ -4,6 +4,44 @@
   
     
     <entry>
+      <title>C++顺序容器</title>
+      <link href="/2024/07/25/C++%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/"/>
+      <url>/2024/07/25/C++%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> C++标准模板库 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>LRU-K替换策略</title>
+      <link href="/2024/07/25/LRU-K%E6%9B%BF%E6%8D%A2%E7%AD%96%E7%95%A5/"/>
+      <url>/2024/07/25/LRU-K%E6%9B%BF%E6%8D%A2%E7%AD%96%E7%95%A5/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> CMU-15445 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>post</title>
       <link href="/2024/07/24/post/"/>
       <url>/2024/07/24/post/</url>
